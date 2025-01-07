@@ -30,7 +30,7 @@ public interface UserDetails extends Serializable {
   boolean isCredentialsNonExpired();
   boolean isEnabled();
 
-  // to skip the implementation of last 4 methods; return true;
+  // if unwanted default is; () -> {return true;}
 }
 
 public interface GrantedAuthority extends Serializable {
