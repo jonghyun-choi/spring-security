@@ -1,25 +1,54 @@
 # Spring security (SS)
 
-## Main components in SS
-### UserDetailsService
-- interface;
-- an object implementing the interface manages details about users
-  - InMemoryUserDetailsManager
+## User Management components
+- UserDetails
+  - describe user
+- UserDetailsService
+  - get user by username
+- UserDetailsManager extends UserDetailService
+  - adds functionality ['Add', 'Modify', 'Delete'] to UserDetailsService
+  - Sample impls
+    - InMemoryUserDetailsManager
+    - JdbcUserDetailsManager
+    - LdapUserDetailsManager
+- GrantedAuthority
+  - What user can do
+  - Sample impls
+    - SimpleGrantedAuthority
 
-### PasswordEncoder
+1. UserDetails has one or more GrantedAuthority
+2. UserDetailsService uses UserDetails
+
+## Define user
+```java
+public interface UserDetails extends Serializable {
+  String getUsername();
+  String getPassword();
+  Collection <? extends GrantedAuthority> getAuthorities();
+  boolean isAccountNonExpired();
+  boolean isAccountNonLocked();
+  boolean isCredentialsNonExpired();
+  boolean isEnabled();
+
+  // to skip the implementation of last 4 methods; return true;
+}
+
+public interface GrantedAuthority extends Serializable {
+  String getAuthority();
+  // GrantedAutority g1 = () -> "READ"; lambda single abstract method feature
+  // GrantedAuthority g2 = new SimpleGrantedAuthority("READ");
+}
+
+```
+
 
 ### AuthenticationProvider
-- defines authentication logic
-
 ### AuthentiationFilter
-
 ### AuthenticationManager
-
 ### Security Context
-
 ## HTTP vs HTTPS
 
-## Types of authentication
+## Authentication Types
 1. HTTP Basic
     ```
         curl --location 'http://localhost:8080/hello' \
