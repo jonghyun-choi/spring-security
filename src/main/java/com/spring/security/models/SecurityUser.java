@@ -1,28 +1,32 @@
 package com.spring.security.models;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.spring.security.entities.User;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class SimpleUser implements UserDetails {
-    private final String username;
-    private final String password;
+public class SecurityUser implements UserDetails {
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+        return List.of(() -> user.getAuthority());
     }
+
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
+
     @Override
     public String getUsername() {
-        return username;    
+        return user.getUsername();
     }
+    
 }
